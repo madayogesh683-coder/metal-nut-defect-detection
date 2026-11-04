@@ -34,6 +34,32 @@ This project proposes an automated defect detection system using deep learning a
 
 ## 4. Dataset Description
 
+### Dataset Download and Preparation
+
+Download the Metal Nut category from the official MVTec AD dataset:
+
+https://www.mvtec.com/company/research/datasets/mvtec-ad
+
+Extract the downloaded dataset into:
+
+```text
+dataset/metal_nut/
+```
+
+Then prepare the YOLO-format dataset by running:
+
+```bash
+python -m src.prepare_data
+```
+
+Verify the prepared dataset:
+
+```bash
+python -m src.verify_data
+```
+
+The prepared dataset is divided into training, validation, and testing sets.
+
 The project uses the Metal Nut category from the MVTec Anomaly Detection (MVTec AD) dataset.
 
 The dataset contains normal metal nut images and defective samples.
@@ -168,6 +194,24 @@ python -m src.train
 
 ### Evaluate the trained model
 
+### Trained Model Weights
+
+The trained model weights are generated after completing model training.
+
+Expected model path:
+
+```text
+runs/detect/outputs/metal_nut_4class/weights/best.pt
+```
+
+If the trained weights are not available, run the training script first:
+
+```bash
+python -m src.train
+```
+
+Ensure the trained weights are available before running evaluation or prediction.
+
 ```bash
 python -m src.evaluate
 ```
@@ -207,6 +251,7 @@ The system produces prediction images with detected classes and bounding boxes.
 - Scratch and bent detection require further improvement and validation.
 - The model has not yet been validated in a real industrial production environment.
 
+
 ## 12. Future Scope
 
 - Increase the dataset size.
@@ -215,6 +260,25 @@ The system produces prediction images with detected classes and bounding boxes.
 - Deploy the model through a web application.
 - Integrate with industrial IoT systems.
 - Explore edge deployment using suitable hardware.
+
+## 13. Reconciliation Results
+
+The project includes a reconciliation module to compare model predictions with ground-truth annotations.
+
+Run reconciliation using:
+
+```bash
+python -m src.reconcile
+```
+
+The module generates the following reports:
+
+- `reports/reconciliation_per_image.csv` – Image-level prediction and ground-truth comparison.
+- `reports/reconciliation_summary.csv` – Class-wise performance summary.
+
+The reconciliation process calculates True Positives (TP), False Positives (FP), False Negatives (FN), precision, and recall for each defect category.
+
+These reports help identify detection errors and evaluate model performance.
 
 
 ## 14. Reproducible Sample Data
@@ -235,7 +299,7 @@ Images are saved in `sample_data/images/`.
 
 These synthetic images are for demonstration and pipeline smoke testing only. They are not part of the original MVTec AD dataset.
 
-## 15. Automated Tests
+## 14. Automated Tests
 
 Install dependencies:
 
@@ -251,7 +315,7 @@ python -m pytest -p no:cacheprovider tests -v
 
 The tests verify model loading, class names, and inference execution.
 
-## 16. Conclusion
+## 15. Conclusion
 
 This project demonstrates the application of YOLOv8 for automated metal nut defect detection.
 
@@ -259,7 +323,7 @@ The developed system identifies four defect categories and generates visual pred
 
 The experimental results demonstrate the potential of deep learning-based visual inspection for manufacturing quality control. Further training and real-world validation can improve reliability.
 
-## 17. License and Dataset Reference
+## 16. License and Dataset Reference
 
 Dataset: MVTec Anomaly Detection (MVTec AD)
 
