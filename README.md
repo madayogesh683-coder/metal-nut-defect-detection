@@ -231,3 +231,38 @@ Dataset: MVTec Anomaly Detection (MVTec AD)
 Official dataset website: https://www.mvtec.com/company/research/datasets/mvtec-ad
 
 Refer to the dataset's license and usage conditions before redistribution.
+
+
+## 15. Reproducible Sample Data
+
+The project includes a synthetic sample data generator.
+
+Generate sample images using:
+
+```bash
+python -m src.generate_sample
+```
+
+The generator creates:
+- sample_normal.png
+- sample_scratch.png
+
+Images are saved in `sample_data/images/`.
+
+These synthetic images are for demonstration and pipeline smoke testing only. They are not part of the original MVTec AD dataset.
+
+## 16. Automated Tests
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run automated tests:
+
+```bash
+python -m pytest -p no:cacheprovider tests -v
+```
+
+The tests verify model loading, class names, and inference execution.
