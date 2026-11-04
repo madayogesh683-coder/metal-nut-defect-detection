@@ -1,4 +1,4 @@
-# Metal Nut Defect Detection Using YOLOv8
+# Metal Nut Defect Detection Using YOLOv81
 
 ## 1. Project Overview
 
@@ -216,24 +216,8 @@ The system produces prediction images with detected classes and bounding boxes.
 - Integrate with industrial IoT systems.
 - Explore edge deployment using suitable hardware.
 
-## 13. Conclusion
 
-This project demonstrates the application of YOLOv8 for automated metal nut defect detection.
-
-The developed system identifies four defect categories and generates visual predictions with bounding boxes.
-
-The experimental results demonstrate the potential of deep learning-based visual inspection for manufacturing quality control. Further training and real-world validation can improve reliability.
-
-## 14. License and Dataset Reference
-
-Dataset: MVTec Anomaly Detection (MVTec AD)
-
-Official dataset website: https://www.mvtec.com/company/research/datasets/mvtec-ad
-
-Refer to the dataset's license and usage conditions before redistribution.
-
-
-## 15. Reproducible Sample Data
+## 14. Reproducible Sample Data
 
 The project includes a synthetic sample data generator.
 
@@ -251,7 +235,7 @@ Images are saved in `sample_data/images/`.
 
 These synthetic images are for demonstration and pipeline smoke testing only. They are not part of the original MVTec AD dataset.
 
-## 16. Automated Tests
+## 15. Automated Tests
 
 Install dependencies:
 
@@ -266,3 +250,20 @@ python -m pytest -p no:cacheprovider tests -v
 ```
 
 The tests verify model loading, class names, and inference execution.
+
+## 16. Conclusion
+
+This project demonstrates the application of YOLOv8 for automated metal nut defect detection.
+
+The developed system identifies four defect categories and generates visual predictions with bounding boxes.
+
+The experimental results demonstrate the potential of deep learning-based visual inspection for manufacturing quality control. Further training and real-world validation can improve reliability.
+
+## 17. License and Dataset Reference
+
+Dataset: MVTec Anomaly Detection (MVTec AD)
+
+Official dataset website: https://www.mvtec.com/company/research/datasets/mvtec-ad
+
+Refer to the dataset's license and usage conditions before redistribution.
+
