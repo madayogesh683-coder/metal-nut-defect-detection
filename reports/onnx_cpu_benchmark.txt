@@ -1,0 +1,18 @@
+ONNX CPU BENCHMARK REPORT
+
+Model: YOLOv8 ONNX
+Execution Provider: CPUExecutionProvider
+Input Resolution: 416 × 416
+
+Results:
+- Images processed: 2
+- Average latency: 119.24 ms
+- Minimum latency: 115.29 ms
+- Maximum latency: 123.18 ms
+- Throughput: 8.39 FPS
+
+Conclusion:
+
+The ONNX model was successfully executed using CPU inference. The measured average latency was 119.24 ms per image. This does not meet the customer's 10 ms latency requirement. Further optimization through model quantization, smaller input resolution, hardware acceleration, and optimized inference runtimes is required.
+
+Note: The benchmark used only two sample images, so additional testing with a larger representative dataset is required for reliable performance evaluation.
