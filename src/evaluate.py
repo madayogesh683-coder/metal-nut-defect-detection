@@ -3,7 +3,7 @@ from ultralytics import YOLO
 from pathlib import Path
 
 MODEL_PATH = (
-    "runs/detect/outputs/metal_nut_4class/weights/best.pt"
+    "runs/detect/outputs/metal_nut_4class/weights/last.pt"
 )
 
 DATA_PATH = "dataset/yolo_metal_nut_4class/data.yaml"
@@ -28,7 +28,7 @@ def main():
         batch=4,
         device="cpu",
         plots=True,
-        project="outputs",
+        project="runs/detect/outputs",
         name="metal_nut_4class_test_eval",
         exist_ok=True
     )
@@ -43,4 +43,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
