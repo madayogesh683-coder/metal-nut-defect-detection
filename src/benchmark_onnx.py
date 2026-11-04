@@ -1,57 +1,64 @@
+
 import time
 import glob
 import numpy as np
 import onnxruntime as ort
 import cv2
 
-MODEL_PATH = "models/best.onnx"
-IMAGE_SIZE = 416
-
-session = ort.InferenceSession(
-    MODEL_PATH,
-    providers=["CPUExecutionProvider"]
-)
-
-input_name = session.get_inputs()[0].name
+MODELS = {
+    "416x416": ("models/best_416.onnx", 416),
+    "320x320": ("models/best_320.onnx", 320),
+}
 
 images = glob.glob("sample_data/images/*")
 
 if not images:
-    raise FileNotFoundError("No sample images found!")
+    raise FileNotFoundError("No sample images found in sample_data/images")
 
-times = []
+for label, (model_path, image_size) in MODELS.items():
+    print(f"\nBenchmarking {label} model...")
 
-# Warm-up
-dummy = np.zeros((1, 3, IMAGE_SIZE, IMAGE_SIZE), dtype=np.float32)
+    session = ort.InferenceSession(
+        model_path,
+        providers=["CPUExecutionProvider"]
+    )
+    input_name = session.get_inputs()[0].name
 
-for _ in range(5):
-    session.run(None, {input_name: dummy})
+    dummy = np.zeros(
+        (1, 3, image_size, image_size),
+        dtype=np.float32
+    )
 
-# Benchmark
-for image_path in images:
-    image = cv2.imread(image_path)
+    for _ in range(5):
+        session.run(None, {input_name: dummy})
 
-    if image is None:
-        continue
+    times = []
 
-    image = cv2.resize(image, (IMAGE_SIZE, IMAGE_SIZE))
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image = image.transpose(2, 0, 1)
-    image = np.expand_dims(image, axis=0).astype(np.float32) / 255.0
+    for image_path in images:
+        image = cv2.imread(image_path)
 
-    start = time.perf_counter()
-    session.run(None, {input_name: image})
-    end = time.perf_counter()
+        if image is None:
+            continue
 
-    times.append((end - start) * 1000)
+        image = cv2.resize(image, (image_size, image_size))
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = image.transpose(2, 0, 1)
+        image = np.expand_dims(image, axis=0).astype(np.float32) / 255.0
 
-if not times:
-    raise RuntimeError("No valid images found.")
+        start = time.perf_counter()
+        session.run(None, {input_name: image})
+        end = time.perf_counter()
 
-print("\nONNX CPU BENCHMARK RESULTS")
-print("--------------------------")
-print(f"Images processed: {len(times)}")
-print(f"Average latency: {np.mean(times):.2f} ms")
-print(f"Minimum latency: {np.min(times):.2f} ms")
-print(f"Maximum latency: {np.max(times):.2f} ms")
-print(f"FPS: {1000 / np.mean(times):.2f}")
+        times.append((end - start) * 1000)
+
+    if not times:
+        raise RuntimeError(f"No valid images for {label}")
+
+    average = np.mean(times)
+
+    print(f"\n{label} RESULTS")
+    print(f"Images processed: {len(times)}")
+    print(f"Average latency: {average:.2f} ms")
+    print(f"Minimum latency: {np.min(times):.2f} ms")
+    print(f"Maximum latency: {np.max(times):.2f} ms")
+    print(f"FPS: {1000 / average:.2f}")
