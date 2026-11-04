@@ -4,12 +4,12 @@ from ultralytics import YOLO
 ROOT = Path(__file__).resolve().parent.parent
 
 MODEL_PATH = (
-ROOT / "outputs" / "metal_nut_yolov8_v2"
+ROOT / "runs" / "detect" / "outputs" / "metal_nut_4class"
 / "weights" / "best.pt"
 )
 
 TEST_IMAGES = (
-ROOT / "dataset" / "yolo_metal_nut"
+ROOT / "dataset" / "yolo_metal_nut_4class"
 / "images" / "test"
 )
 
@@ -26,7 +26,7 @@ imgsz=416,
 conf=0.25,
 device="cpu",
 save=True,
-project=str(ROOT / "outputs"),
+project=str(ROOT / "runs" / "detect" / "outputs" / "metal_nut_4class"),
 name="metal_nut_predictions_v2",
 exist_ok=True
 )
@@ -34,4 +34,4 @@ exist_ok=True
 print("\nPrediction completed!")
 print("Total images processed:", len(results))
 print("Predictions saved in:")
-print(ROOT / "outputs" / "metal_nut_predictions_v2")
+print(ROOT / "runs" / "detect" / "outputs" / "metal_nut_4class" / "metal_nut_predictions_v2")
