@@ -16,3 +16,66 @@ Conclusion:
 The ONNX model was successfully executed using CPU inference. The measured average latency was 119.24 ms per image. This does not meet the customer's 10 ms latency requirement. Further optimization through model quantization, smaller input resolution, hardware acceleration, and optimized inference runtimes is required.
 
 Note: The benchmark used only two sample images, so additional testing with a larger representative dataset is required for reliable performance evaluation.
+
+
+ONNX CPU RESOLUTION COMPARISON
+==============================
+
+Test setup:
+- Device: CPU
+- Images processed: 2
+- Models: YOLOv8 ONNX
+- Resolutions: 416x416 and 320x320
+
+Results:
+
+416x416:
+- Average latency: 29.10 ms
+- Minimum latency: 27.44 ms
+- Maximum latency: 30.38 ms
+- FPS: 34.37
+
+320x320:
+- Average latency: 22.02 ms
+- Minimum latency: 21.80 ms
+- Maximum latency: 22.24 ms
+- FPS: 45.42
+
+Observation:
+The 320x320 model showed approximately
+24.3% lower average inference latency
+than the 416x416 model in this test.
+
+Note:
+Only two sample images were used.
+Detection accuracy must be validated
+before concluding that the smaller
+resolution is the better model.
+
+
+METAL NUT DEFECT DETECTION
+ONNX CPU BENCHMARK COMPARISON
+
+Hardware: CPU
+Images processed per model: 2
+
+416x416 MODEL
+Average latency: 53.64 ms
+Minimum latency: 50.08 ms
+Maximum latency: 57.21 ms
+FPS: 18.64
+
+320x320 MODEL
+Average latency: 34.58 ms
+Minimum latency: 28.20 ms
+Maximum latency: 40.95 ms
+FPS: 28.92
+
+OBSERVATION
+The 320x320 ONNX model achieved approximately
+35.5% lower average inference latency than the
+416x416 model in this small CPU benchmark.
+
+Note: Results are preliminary and based on
+two sample images. Preprocessing and
+postprocessing are excluded.
