@@ -1,7 +1,6 @@
 
 from pathlib import Path
 
-from src.evaluate import ROOT
 ROOT = Path("dataset/yolo_metal_nut_4class")
 
 for split in ["train", "val", "test"]:
