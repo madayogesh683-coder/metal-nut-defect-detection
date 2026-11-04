@@ -4,3 +4,5 @@ numpy
 PyYAML
 matplotlib
 pandas
+
+pytest
